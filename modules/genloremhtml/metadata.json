@@ -1,0 +1,8 @@
+{
+    "name": "genloremhtml",
+    "label": "Generate Lorem Ipsum",
+    "description": "Generate Lorem Ipsum using https:\/\/loripsum.net\/ ",
+    "typeId": 4,
+    "connection": "lorem-ipsum-app-k3ka42",
+    "webhook": null
+}

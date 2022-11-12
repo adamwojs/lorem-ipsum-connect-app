@@ -1,0 +1,8 @@
+[
+    {
+        "name": "count",
+        "type": "text",
+        "label": "The number of paragraphs to generate.",
+        "required": false
+    }
+]

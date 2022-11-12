@@ -1,0 +1,11 @@
+{
+    "url": "/",
+    "method": "GET",
+    "qs": {
+        "foo": "bars"
+    },
+    "headers": {},
+    "response": {
+        "output": "{{body}}"
+    }
+}
