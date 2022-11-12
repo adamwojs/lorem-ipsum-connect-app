@@ -1,0 +1,48 @@
+name: Deploy (caller)
+
+on:
+    workflow_dispatch:
+        inputs:
+            name:
+                type: string
+                description: App name
+                default: lorem-ipsum-app
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Set Environment
+                run: |
+                    echo "IBEXA_CONNECT_URL=${{secrets.IBEXA_CONNECT_URL}}" >> $GITHUB_ENV
+                    echo "IBEXA_CONNECT_TOKEN=${{secrets.IBEXA_CONNECT_TOKEN}}" >> $GITHUB_ENV
+
+            -   name: Checkout Connect CLI
+                uses: actions/checkout@master
+                with:
+                    repository: adamwojs/connect-cli
+                    token: ${{ secrets.GH_PAT }}
+                    ref: main
+
+            -   name: Setup PHP Action
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.1
+                    coverage: none
+                    tools: cs2pr
+
+            -   uses: "ramsey/composer-install@v1"
+                with:
+                    dependency-versions: "highest"
+
+            -   name: Checkout App
+                uses: actions/checkout@master
+                with:
+                    path: app
+
+            -  name: Deploy App
+               run: |
+                   php bin/ibexa-connect app:import --app-name=test-app ./app
+               env:
+                  IBEXA_CONNECT_URL: ${{ secrets.IBEXA_CONNECT_URL }}
+                  IBEXA_CONNECT_TOKEN: ${{ secrets.IBEXA_CONNECT_TOKEN }}
